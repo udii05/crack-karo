@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f6f8fc;
+  --foreground: #17243a;
+  --blue: #3978e8;
+  --blue-dark: #245fc9;
+  --green: #16856b;
+  --green-bg: #e9f7f2;
+  --amber: #a66b17;
+  --amber-bg: #fff5e5;
+  --line: #e7edf5;
+  --muted: #718096;
+  --shadow: 0 8px 28px rgba(25, 48, 82, 0.055);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 14px;
+  line-height: 1.5;
+  @apply font-sans antialiased;
+}
+
+::selection {
+  background: #dbe8ff;
+  color: #173d80;
+}
+
+@layer base {
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-[18px] border border-line bg-white p-[17px] shadow-soft sm:p-[21px_22px];
+  }
+  .card-flat {
+    @apply rounded-[18px] border border-line bg-white p-[17px] sm:p-[21px_22px];
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-[10px] px-[15px] py-[10px] text-sm font-semibold transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 text-white shadow-[0_5px_12px_rgba(57,120,232,0.17)] hover:-translate-y-px hover:bg-brand-700;
+  }
+  .btn-secondary {
+    @apply btn border border-[#dce6f4] bg-white text-[#49617f] hover:border-brand-300 hover:text-brand-600;
+  }
+  .btn-ghost {
+    @apply btn text-[#65748a] hover:bg-[#f5f8fe] hover:text-brand-600;
+  }
+  .btn-danger {
+    @apply btn bg-red-600 text-white hover:bg-red-700;
+  }
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs;
+  }
+  .input {
+    @apply w-full rounded-[11px] border border-line bg-[#fbfcfe] px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-[#9aa6b6] focus:border-[#9bbbf5] focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-600/10 disabled:bg-slate-50;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-semibold text-[#65748a];
+  }
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-semibold;
+  }
+  .skeleton {
+    @apply animate-pulse rounded-lg bg-slate-200/80;
+  }
+  .sidebar-link {
+    @apply relative flex items-center gap-3 rounded-[11px] px-3 py-2.5 text-sm font-medium transition-colors duration-150;
+  }
+}
