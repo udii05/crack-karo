@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="drawio" version="26.0.0">
+  <diagram name="AI-Interview-Copilot-Architecture">
+    <mxGraphModel background="none" pageWidth="1400" pageHeight="1680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ================= CONTAINERS (LANES) ================= -->
+        <mxCell id="clients-lane" value="Clients" style="swimlane;startSize=32;whiteSpace=wrap;html=1;fontStyle=1;fontSize=15;fontFamily=Calibri;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="30" y="30" width="1300" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-lane" value="Edge / API Gateway" style="swimlane;startSize=32;whiteSpace=wrap;html=1;fontStyle=1;fontSize=15;fontFamily=Calibri;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="30" y="250" width="1300" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="app-lane" value="Application Services" style="swimlane;startSize=32;whiteSpace=wrap;html=1;fontStyle=1;fontSize=15;fontFamily=Calibri;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="30" y="470" width="1300" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="ai-lane" value="AI Orchestration Layer" style="swimlane;startSize=32;whiteSpace=wrap;html=1;fontStyle=1;fontSize=15;fontFamily=Calibri;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="30" y="740" width="1300" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="data-lane" value="Data Layer" style="swimlane;startSize=32;whiteSpace=wrap;html=1;fontStyle=1;fontSize=15;fontFamily=Calibri;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="30" y="1010" width="1300" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="external-lane" value="External Services" style="swimlane;startSize=32;whiteSpace=wrap;html=1;fontStyle=1;fontSize=15;fontFamily=Calibri;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="30" y="1250" width="1300" height="190" as="geometry" />
+        </mxCell>
+
+        <!-- ================= EDGES (Z-order: behind shapes) ================= -->
+        <mxCell id="e-web-gw" value="HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#6c8ebf;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="web-app" target="api-gateway">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-mobile-app" value="HTTPS / WS" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#6c8ebf;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="mobile-app" target="api-gateway">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-browser-ext" value="HTTPS (Copilot)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#6c8ebf;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="browser-ext" target="api-gateway">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-gw-auth" value="Verify JWT" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#9673a6;dashed=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="api-gateway" target="auth-svc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-gw-users" value="REST" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#6c8ebf;exitX=0.15;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="api-gateway" target="users-svc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-gw-interview" value="REST / WS" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#6c8ebf;exitX=0.4;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="api-gateway" target="interview-svc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-gw-feedback" value="REST" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#6c8ebf;exitX=0.7;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="api-gateway" target="feedback-svc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-gw-billing" value="REST" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#6c8ebf;exitX=0.9;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="api-gateway" target="billing-svc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-interview-ai" value="AI jobs / stream" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#d6b656;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="interview-svc" target="ai-orchestrator">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-users-pg" value="CRUD" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#82b366;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="users-svc" target="postgres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-interview-pg" value="CRUD" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#82b366;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="interview-svc" target="postgres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-interview-redis" value="Sessions / queue" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#82b366;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="interview-svc" target="redis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-interview-s3" value="Media / transcripts" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#82b366;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="interview-svc" target="s3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-feedback-s3" value="Reports" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#82b366;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="feedback-svc" target="s3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-billing-stripe" value="Charges" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#666666;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="billing-svc" target="stripe">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-ai-llm" value="LLM calls" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#d6b656;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="ai-orchestrator" target="llm-gateway">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-ai-rag" value="Embeddings / RAG" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#d6b656;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="ai-orchestrator" target="rag-store">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-ai-stt" value="STT / TTS" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#d6b656;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="ai-orchestrator" target="stt-tts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-ai-pg" value="Persist" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#82b366;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="ai-orchestrator" target="postgres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-ai-redis" value="Job state" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#82b366;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="ai-orchestrator" target="redis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-llm-providers" value="OpenAI / Anthropic / Gemini" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;fontFamily=Calibri;strokeColor=#666666;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="llm-gateway" target="llm-providers">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ================= CLIENTS SHAPES ================= -->
+        <mxCell id="web-app" value="Web App&#xa;(Next.js)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="clients-lane">
+          <mxGeometry x="70" y="70" width="320" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="mobile-app" value="Mobile App&#xa;(React Native)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="clients-lane">
+          <mxGeometry x="500" y="70" width="320" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="browser-ext" value="Browser Extension&#xa;(Live Copilot)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="clients-lane">
+          <mxGeometry x="930" y="70" width="300" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ================= EDGE SHAPES ================= -->
+        <mxCell id="api-gateway" value="API Gateway&#xa;(Cloudflare / AWS · WAF · Rate limiting)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="edge-lane">
+          <mxGeometry x="140" y="70" width="380" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="auth-svc" value="Auth&#xa;(Clerk / Auth0 · JWT · SSO)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="edge-lane">
+          <mxGeometry x="700" y="70" width="300" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ================= APP SHAPES ================= -->
+        <mxCell id="users-svc" value="Users Service&#xa;(profiles, resumes, skills)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="app-lane">
+          <mxGeometry x="60" y="90" width="280" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="interview-svc" value="Interview Service&#xa;(mock + live copilot)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="app-lane">
+          <mxGeometry x="400" y="90" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="feedback-svc" value="Feedback Service&#xa;(scoring, reports)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="app-lane">
+          <mxGeometry x="760" y="90" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="billing-svc" value="Billing Service&#xa;(Stripe, credits)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="app-lane">
+          <mxGeometry x="1110" y="90" width="180" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- ================= AI SHAPES ================= -->
+        <mxCell id="ai-orchestrator" value="AI Orchestrator&#xa;(FastAPI · Agents · State machine)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="ai-lane">
+          <mxGeometry x="60" y="90" width="320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="llm-gateway" value="LLM Gateway&#xa;(multi-provider, retries, cost caps)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="ai-lane">
+          <mxGeometry x="450" y="90" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="rag-store" value="RAG / Vector Store&#xa;(pgvector)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="ai-lane">
+          <mxGeometry x="820" y="90" width="240" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="stt-tts" value="STT / TTS&#xa;(Whisper, voice)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="ai-lane">
+          <mxGeometry x="1120" y="90" width="160" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- ================= DATA SHAPES ================= -->
+        <mxCell id="postgres" value="PostgreSQL&#xa;(primary DB + RLS)" style="shape=cylinder3;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="data-lane">
+          <mxGeometry x="100" y="70" width="280" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="redis" value="Redis&#xa;(sessions, queues, limits)" style="shape=cylinder3;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="data-lane">
+          <mxGeometry x="500" y="70" width="280" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" value="Object Storage (S3)&#xa;(resumes, audio, video)" style="shape=cylinder3;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="data-lane">
+          <mxGeometry x="900" y="70" width="280" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- ================= EXTERNAL SHAPES ================= -->
+        <mxCell id="stripe" value="Stripe&#xa;(subscriptions, metering)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="external-lane">
+          <mxGeometry x="140" y="70" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="llm-providers" value="LLM Providers&#xa;(OpenAI · Anthropic · Gemini)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="external-lane">
+          <mxGeometry x="520" y="70" width="300" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aws" value="AWS&#xa;(ECS/EKS, Terraform, CI/CD)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="external-lane">
+          <mxGeometry x="920" y="70" width="280" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ================= LEGEND ================= -->
+        <mxCell id="legend-box" value="Legend" style="rounded=1;container=1;pointerEvents=0;whiteSpace=wrap;html=1;fontSize=14;fontFamily=Calibri;fontStyle=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="1480" width="330" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="lg-blue" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="legend-box">
+          <mxGeometry x="20" y="45" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lg-blue-txt" value="Clients · App services" style="text;html=1;fontSize=13;fontFamily=Calibri;align=left;" vertex="1" parent="legend-box">
+          <mxGeometry x="60" y="42" width="250" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="lg-yellow" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="legend-box">
+          <mxGeometry x="20" y="75" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lg-yellow-txt" value="AI Core / Orchestration" style="text;html=1;fontSize=13;fontFamily=Calibri;align=left;" vertex="1" parent="legend-box">
+          <mxGeometry x="60" y="70" width="150" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="lg-green" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="legend-box">
+          <mxGeometry x="20" y="105" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lg-green-txt" value="Data Stores" style="text;html=1;fontSize=13;fontFamily=Calibri;align=left;" vertex="1" parent="legend-box">
+          <mxGeometry x="60" y="100" width="150" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="lg-grey" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="legend-box">
+          <mxGeometry x="20" y="135" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lg-grey-txt" value="External / Infra" style="text;html=1;fontSize=13;fontFamily=Calibri;align=left;" vertex="1" parent="legend-box">
+          <mxGeometry x="60" y="130" width="150" height="26" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
