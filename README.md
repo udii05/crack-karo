@@ -1,271 +1,544 @@
-﻿# AI Interview Copilot
+﻿# Interview Copilot
 
-A production-ready SaaS MVP for AI-powered interview preparation with mock interviews, voice interaction, real-time scoring, and a live copilot for actual interviews.
+**AI-powered interview preparation for students and early-career engineers.**
 
-![Python](https://img.shields.io/badge/Python-3.14+-blue) ![FastAPI](https://img.shields.io/badge/FastAPI-0.139-green) ![Next.js](https://img.shields.io/badge/Next.js-15.1-black) ![React](https://img.shields.io/badge/React-19-61DAFB) ![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)
+Interview Copilot is a full-stack practice platform built around voice-first mock interviews. It generates interview questions, transcribes spoken answers, scores them across multiple dimensions, tracks readiness over time, and turns the results into a personalised practice plan.
+
+The platform is designed around a **bring-your-own-key (BYOK)** model: users connect their own Gemini or OpenAI key, so the application can stay free while inference costs remain under the user's control.
+
+[![CI](https://github.com/udii05/crack-karo/actions/workflows/ci.yml/badge.svg)](https://github.com/udii05/crack-karo/actions/workflows/ci.yml)
+![Next.js](https://img.shields.io/badge/Next.js-15.1-000000?logo=nextdotjs)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-ready-4169E1?logo=postgresql)
+![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker)
+![BYOK](https://img.shields.io/badge/AI-BYOK-3978e8)
+
+---
+
+## Table of contents
+
+- [What it does](#what-it-does)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Tech stack](#tech-stack)
+- [Quick start](#quick-start)
+- [Configuration](#configuration)
+- [BYOK and key security](#byok-and-key-security)
+- [Database and migrations](#database-and-migrations)
+- [API overview](#api-overview)
+- [Project structure](#project-structure)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Security model](#security-model)
+- [Current limitations and roadmap](#current-limitations-and-roadmap)
+- [Contributing](#contributing)
+
+---
+
+## What it does
+
+Interview practice usually gives people a score and little else. Interview Copilot keeps the full loop:
+
+1. Choose a role, interview type, difficulty, and session length.
+2. The AI interviewer asks questions by voice.
+3. The user answers by speaking.
+4. Each answer is scored for relevance, structure, technical depth, and delivery.
+5. The dashboard and coach turn those scores into a practice plan.
+6. The question bank and skill assessment turn the plan into focused practice.
+
+The app includes both a structured **Mock Interview** flow and a hands-free **Live Chat** interviewer. Live Chat currently uses the browser's Web Speech API for speech recognition and synthesis; it does not require server-side audio infrastructure.
 
 ---
 
 ## Features
 
-### AI Mock Interviews
-- **Behavioral & Technical** interview types with configurable difficulty (beginner / intermediate / advanced)
-- **Voice Mode** â€” AI interviewer reads questions aloud (text-to-speech); candidates answer by voice (speech-to-text transcription)
-- **Content-Aware Scoring** â€” evaluates relevance, structure, technical depth, and delivery (not just word count)
-- **Per-Answer Feedback** â€” dimension scores (Relevance, Structure, Technical, Delivery) with targeted improvement tips
-- **STAR Framework** â€” behavioral questions scored against Situation-Task-Action-Result structure
+### Mock interviews
+
+- Behavioural and technical interview types.
+- Beginner, intermediate, and advanced difficulty.
+- Configurable question count and session duration.
+- Voice-only answers with live transcription.
+- Per-answer scoring across relevance, structure, technical accuracy, and delivery.
+- STAR-oriented feedback for behavioural answers.
+- Saved reports with question, answer, score, and improvement notes.
 
 ### Live Chat
-- Hands-free AI interviewer: speaks the question, listens, and advances automatically
-- Chrome/Edge browser speech, with transcript saved into the interview report
-- Optional BYOK realtime provider upgrade path (Gemini Live / OpenAI Realtime)
 
-### Dashboard & Analytics
-- **Readiness Score** (0â€“100) updated after every interview
-- **Streak Tracker** â€” consecutive days of practice
-- **Skill Radar** â€” strengths and gaps across interview-relevant skills
-- **Recent Interviews** â€” quick access to past sessions and reports
+- Hands-free AI interviewer.
+- The interviewer speaks a question, opens the microphone automatically, and advances after the answer.
+- Interview state and transcripts are stored as normal interview sessions.
+- Chrome and Edge are supported.
+- No raw audio is stored by default.
 
-### Resume & Job Description Analysis
-- Upload resume (PDF/TXT) for skill extraction
-- Enter job description â†’ AI generates tailored likely interview questions
+### Dashboard and analytics
 
-### Question Bank
-- Browse categorized questions (behavioral, technical) with difficulty levels and hints
+- Readiness score based on interview volume, score quality, streak, and skill coverage.
+- Average score, practice time, and current streak.
+- Score trend filters for 7, 30, 90 days, and all time.
+- Skill breakdown with strongest and weakest dimensions.
+- Recent interview history with review actions.
+- Preparation goals with progress tracking.
+- Full analytics page with type breakdowns, interview frequency, and recurring weaknesses.
+
+### Question bank
+
+- 16 computer-science domains.
+- 232 curated questions with difficulty levels.
+- Domain cards with completed/total progress.
+- Mic-based practice flow: record an answer, receive a score, and mark the question complete.
+- Question attempts and best scores are stored per user.
+
+### Skill assessment and role fit
+
+- Generic role profiles such as Software Engineer, AI Engineer, ML Engineer, Data Scientist, Frontend, Backend, Full Stack, DevOps, Cybersecurity, Cloud, Data Engineer, Python, Java, QA, and Mobile.
+- Resume upload for skill extraction.
+- Self-rating with a four-step proficiency slider: Beginner, Intermediate, Skilled, Advanced.
+- Role fit score with coverage, gaps, and recommendations.
+- LLM-generated focus areas with specific study topics.
+- Manual skill additions for requirements missing from a resume.
+- Communication is intentionally excluded from self-rating; it is assessed through interviews.
+
+### AI coach
+
+- Insights derived from actual interview scores.
+- Strongest and weakest dimensions.
+- Recurring weaknesses.
+- Recommended questions.
+- Next-step plan.
+- Follow-up chat grounded in the user's performance data.
+
+### Job preparation
+
+- Paste a job description.
+- Reuse the existing resume upload and skill extraction.
+- Identify missing skills.
+- Generate likely interview questions.
+- Create a preparation goal from the analysis.
+
+### Admin
+
+- Admin-only account directory.
+- Name, email, role, and join date.
+- Passwords and password hashes are never returned.
+- Access is controlled by the server-side `ADMIN_EMAILS` allowlist.
 
 ---
 
 ## Architecture
 
-```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚  Next.js 15  â”‚â”€â”€â”€â”€â–¶â”‚  FastAPI     â”‚â”€â”€â”€â”€â–¶â”‚  SQLite      â”‚
-â”‚  (Port 3000) â”‚â—€â”€â”€â”€â”€â”‚  (Port 8000) â”‚â—€â”€â”€â”€â”€â”‚  (SQLAlchemy)â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-     React 19          Pydantic              Database
-     TypeScript         PyJWT                 Models
-     Tailwind CSS       Uvicorn
+```mermaid
+flowchart LR
+    subgraph Client["Client"]
+        UI["Next.js UI<br/>Dashboard, interviews, settings"]
+        Speech["Browser Web Speech API<br/>Speech-to-text / text-to-speech"]
+        UI <--> Speech
+    end
+
+    Edge["Cloudflare<br/>DNS, TLS, WAF"]
+    Frontend["Vercel / Cloudflare Pages<br/>Next.js frontend"]
+    API["Oracle VM + Docker<br/>Caddy -> FastAPI<br/>REST, cookies, CSRF"]
+    DB[("PostgreSQL<br/>Neon / Supabase")]
+    Redis[("Redis<br/>shared rate limits")]
+    Providers["BYOK provider gateway<br/>per-user encrypted keys"]
+    Gemini["Google Gemini"]
+    OpenAI["OpenAI"]
+    Observability["Sentry + structured logs"]
+    Backup[("Encrypted backups<br/>R2 / S3")]
+    Realtime["Planned realtime gateway<br/>Gemini Live / OpenAI Realtime"]
+
+    UI --> Edge --> Frontend --> API
+    API --> DB
+    API --> Redis
+    API --> Providers
+    Providers --> Gemini
+    Providers --> OpenAI
+    API --> Observability
+    DB --> Backup
+    API -. "next phase" .-> Realtime
+    Realtime -.-> Gemini
+    Realtime -.-> OpenAI
 ```
 
-- **Backend**: FastAPI + SQLAlchemy + SQLite (zero-config, file-based)
-- **Frontend**: Next.js 15 (App Router) + React 19 + TypeScript + Tailwind CSS
-- **Auth**: JWT-based (register / login / protected routes)
-- **AI Provider**: Pluggable â€” Gemini (set `GEMINI_API_KEY`), OpenAI (set `OPENAI_API_KEY`), or a local mock provider when no key is configured
+### Request flow
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant F as Next.js
+    participant A as FastAPI
+    participant P as BYOK provider
+    participant D as PostgreSQL
+
+    U->>F: Start a mock interview
+    F->>A: POST /api/interviews (httpOnly cookie + CSRF)
+    A->>P: Generate questions with user's key
+    P-->>A: Questions
+    A->>D: Save interview and sessions
+    A-->>F: Interview detail
+    F-->>U: Speak question with browser TTS
+    U->>F: Spoken answer
+    F->>A: POST /api/interviews/{id}/answer
+    A->>P: Score answer with user's key
+    P-->>A: Score and feedback
+    A->>D: Save answer and evaluation
+    A-->>F: Updated interview
+    F-->>U: Next question or final report
+```
 
 ---
 
-## Quick Start
+## Tech stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js App Router, React 19, TypeScript, Tailwind CSS, Lucide |
+| Backend | FastAPI, SQLAlchemy 2, Pydantic 2, PyJWT |
+| Database | SQLite for local development, PostgreSQL for production |
+| Migrations | Alembic |
+| AI providers | Google Gemini and OpenAI via a provider gateway |
+| Voice | Browser Web Speech API (Chrome / Edge) |
+| Caching and limits | Redis (optional locally, recommended in production) |
+| Deployment | Docker, Docker Compose, Caddy, Oracle Always Free, Neon/Supabase |
+| Observability | Sentry, structured request logs, health and readiness endpoints |
+| CI | GitHub Actions |
+
+---
+
+## Quick start
 
 ### Prerequisites
-- **Python 3.14+**
-- **Node.js 18+** and **npm**
-- **Chrome or Edge** (for voice interview features â€” Web Speech API)
 
-### 1. Clone & Install
+- Python 3.13+
+- Node.js 20+ (22 LTS recommended)
+- npm
+- Chrome or Edge for voice features
+- Optional: PostgreSQL 16+ and Redis for a production-like setup
+
+### 1. Clone the repository
 
 ```bash
-cd interview-copilot
-
-# Backend
-cd backend
-pip install -r requirements.txt
-
-# Frontend
-cd ../frontend
-npm install
+git clone https://github.com/udii05/crack-karo.git
+cd crack-karo
 ```
 
-### 2. Start the Servers
+### 2. Backend
+
+```powershell
+cd backend
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+Copy-Item .env.example .env
+```
+
+Edit `backend/.env` and set at minimum:
+
+```env
+SECRET_KEY=<long-random-string>
+KEY_ENCRYPTION_KEY=<long-random-string>
+ADMIN_EMAILS=your-admin-email@example.com
+```
+
+Start the backend:
+
+```powershell
+python run.py
+```
+
+The API runs at `http://localhost:8000`. API docs are available at `http://localhost:8000/docs`.
+
+On macOS/Linux, activate with:
 
 ```bash
-# Terminal 1 â€” Backend (port 8000)
-cd backend
-python run.py
+source .venv/bin/activate
+```
 
-# Terminal 2 â€” Frontend (port 3000)
+### 3. Frontend
+
+In a second terminal:
+
+```powershell
 cd frontend
+npm install
 npm run dev
 ```
 
-### 3. Open the App
+Open `http://localhost:3000`.
 
-Navigate to **http://localhost:3000** in Chrome or Edge.
+### 4. Connect an AI provider
 
-1. Click **Get started** â†’ Register with any email/password
-2. You'll land on the **Dashboard**
-3. Click **New Interview** â†’ Configure type, difficulty, number of questions
-4. Click **Start interview** â†’ the interviewer reads each question aloud
-5. Tap the large microphone circle, speak your answer, then tap it again to stop and score it automatically
-6. Review your scored report after completion
+1. Sign in and open **Settings**.
+2. Find **LLM Providers**.
+3. Connect Google Gemini or OpenAI with your own API key.
+4. Select the default model and save.
 
----
+Keys are verified before saving. The platform does not simulate a successful connection.
 
-## Project Structure
-
-```
-interview-copilot/
-â”œâ”€â”€ backend/
-â”‚   â”œâ”€â”€ app/
-â”‚   â”‚   â”œâ”€â”€ main.py              # FastAPI app & CORS config
-â”‚   â”‚   â”œâ”€â”€ config.py            # Settings (env vars, JWT secret)
-â”‚   â”‚   â”œâ”€â”€ database.py          # SQLAlchemy engine & session
-â”‚   â”‚   â”œâ”€â”€ models.py            # User, Interview, InterviewSession, Skill, Streak
-â”‚   â”‚   â”œâ”€â”€ schemas.py           # Pydantic request/response models
-â”‚   â”‚   â”œâ”€â”€ security.py          # Password hashing, JWT tokens
-â”‚   â”‚   â”œâ”€â”€ deps.py              # Auth dependency (get_current_user)
-â”‚   â”‚   â”œâ”€â”€ ai/
-â”‚   â”‚   â”‚   â”œâ”€â”€ provider.py      # Pluggable AI interface + provider selection
-â”‚   â”‚   â”‚   â”œâ”€â”€ gemini_provider.py # Gemini REST provider (real analysis)
-â”‚   â”‚   â”‚   â”œâ”€â”€ openai_provider.py
-â”‚   â”‚   â”‚   â”œâ”€â”€ mock.py          # Deterministic mock (no API key needed)
-â”‚   â”‚   â”‚   â””â”€â”€ errors.py        # Provider error type
-â”‚   â”‚   â””â”€â”€ routers/
-â”‚   â”‚       â”œâ”€â”€ auth.py          # POST /api/auth/register, /api/auth/login
-â”‚   â”‚       â”œâ”€â”€ interviews.py    # CRUD interviews, answer, complete
-â”‚   â”‚       â”œâ”€â”€ dashboard.py     # GET /api/dashboard
-â”‚   â”‚       â”œâ”€â”€ copilot.py       # POST /api/copilot/hint
-â”‚   â”‚       â”œâ”€â”€ questions.py     # GET /api/questions
-â”‚   â”‚       â””â”€â”€ users.py         # Resume upload + job analysis
-â”‚   â”œâ”€â”€ run.py                   # Entry point (uvicorn on :8000)
-â”‚   â”œâ”€â”€ .env.example             # AI keys and configuration template
-â”‚   â”œâ”€â”€ requirements.txt
-â”‚   â””â”€â”€ e2e_test.py              # End-to-end API test
-â”œâ”€â”€ frontend/
-â”‚   â”œâ”€â”€ app/
-â”‚   â”‚   â”œâ”€â”€ page.tsx             # Landing page
-â”‚   â”‚   â”œâ”€â”€ layout.tsx           # Root layout with AuthProvider
-â”‚   â”‚   â”œâ”€â”€ login/page.tsx
-â”‚   â”‚   â”œâ”€â”€ register/page.tsx
-â”‚   â”‚   â””â”€â”€ dashboard/
-â”‚   â”‚       â”œâ”€â”€ page.tsx         # Dashboard (readiness, streak, skills)
-â”‚   â”‚       â”œâ”€â”€ interview/
-â”‚   â”‚       â”‚   â”œâ”€â”€ page.tsx     # Interview list
-â”‚   â”‚       â”‚   â”œâ”€â”€ new/page.tsx # New interview (voice-only answers)
-â”‚   â”‚       â”‚   â””â”€â”€ [id]/page.tsx # Interview detail & report
-â”‚   â”‚       â”œâ”€â”€ practice/page.tsx
-â”‚   â”‚       â”œâ”€â”€ skills/page.tsx
-â”‚   â”‚       â””â”€â”€ copilot/page.tsx
-â”‚   â”œâ”€â”€ components/
-â”‚   â”‚   â”œâ”€â”€ VoiceInterview.tsx   # Mic circle, live transcript, auto-submit
-â”‚   â”‚   â”œâ”€â”€ ReadinessGauge.tsx
-â”‚   â”‚   â”œâ”€â”€ ResumeUpload.tsx
-â”‚   â”‚   â””â”€â”€ StatCard.tsx
-â”‚   â”œâ”€â”€ lib/
-â”‚   â”‚   â”œâ”€â”€ api.ts               # API client (fetch wrapper, auth headers)
-â”‚   â”‚   â”œâ”€â”€ auth.tsx             # Auth context (login state, JWT)
-â”‚   â”‚   â””â”€â”€ useSpeech.ts        # Web Speech API hook (TTS + STT)
-â”‚   â””â”€â”€ package.json
-â”œâ”€â”€ docs/
-â”‚   â”œâ”€â”€ 01-original-ask.md       # Product vision & scope
-â”‚   â”œâ”€â”€ 02-brainstorming.md      # Architecture decisions
-â”‚   â”œâ”€â”€ 03-implementation.md     # Build log & implementation details
-â”‚   â””â”€â”€ 04-user-guide.md         # End-user documentation
-â”œâ”€â”€ schema.sql                   # PostgreSQL schema (reference)
-â”œâ”€â”€ dashboard-structure.md       # Dashboard component breakdown
-â”œâ”€â”€ ai-orchestration.md          # AI scoring & flow design
-â””â”€â”€ interview-copilot-architecture.drawio
-```
-
----
-
-## API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/api/auth/register` | Register new user |
-| `POST` | `/api/auth/login` | Login, get JWT |
-| `GET` | `/api/dashboard` | Dashboard metrics |
-| `GET` | `/api/interviews` | List interviews |
-| `POST` | `/api/interviews` | Create interview |
-| `GET` | `/api/interviews/{id}` | Interview detail + sessions |
-| `POST` | `/api/interviews/{id}/answer` | Submit answer, get AI score |
-| `POST` | `/api/interviews/{id}/complete` | Finalize interview |
-| `GET` | `/api/questions` | Browse question bank |
-| `POST` | `/api/copilot/hint` | Get live copilot hints |
-| `POST` | `/api/resumes/upload` | Upload resume (PDF/TXT) |
-| `POST` | `/api/jobs/analyze` | Analyze job description |
-
----
-
-## Voice Interview (Web Speech API)
-
-The voice interview uses the **Web Speech API** (no API key required):
-
-- **Text-to-Speech (TTS)** â€” AI interviewer reads questions aloud
-- **Speech-to-Text (STT)** â€” Candidate answers by voice; the live transcript appears below the mic
-- **One-Tap Recording** â€” Tap the circle to start, tap again to stop and submit for scoring
-- **Auto-Speak** â€” Each new question is read automatically when it appears
-
-> **Browser Support**: Chrome, Edge (Chromium-based). Firefox has limited support. Safari partial support.
+If no user key is connected, the platform fallback key in `backend/.env` is used for development and demo access. For production, rely on BYOK.
 
 ---
 
 ## Configuration
 
-### Environment Variables
+All backend settings live in `backend/.env` and are documented in `backend/.env.example`.
 
 | Variable | Default | Description |
-|----------|---------|-------------|
-| `GEMINI_API_KEY` | _(empty)_ | If set, uses Gemini for all AI analysis (highest priority) |
-| `GEMINI_MODEL` | `gemini-3.5-flash` | Gemini model used for analysis |
-| `OPENAI_API_KEY` | _(empty)_ | Optional fallback if Gemini is not configured |
-| `OPENAI_MODEL` | `gpt-4o-mini` | OpenAI model used for analysis |
-| `SECRET_KEY` | `dev-secret-change-me-in-production` | JWT/cookie signing key |
-| `KEY_ENCRYPTION_KEY` | _(derived from SECRET_KEY)_ | Encrypts user BYOK provider keys at rest. Set a separate long random value in production. |
-| `FRONTEND_ORIGIN` | `http://localhost:3000` | Allowed CORS origin |
-| `ADMIN_EMAILS` | `udita.chakraborty05@gmail.com,asmita.chakrab@gmail.com` | Comma-separated allowlist for the admin account directory. Passwords are never returned. |
-| `DATABASE_URL` | `sqlite:///./data/copilot.db` | Use Postgres in production |
-| `ENVIRONMENT` | `development` | Set to `production` on the server |
-| `COOKIE_SECURE` | `false` | Set to `true` behind HTTPS |
-| `COOKIE_SAMESITE` | `lax` | Use `none` only for unrelated frontend/API domains with HTTPS |
-| `COOKIE_DOMAIN` | _(empty)_ | Set to `.example.com` when frontend and API use different subdomains, so the CSRF cookie is readable |
-| `REDIS_URL` | _(empty)_ | Shared rate limits and multi-instance coordination |
-| `SENTRY_DSN` | _(empty)_ | Error monitoring |
+|---|---|---|
+| `SECRET_KEY` | development placeholder | Signs auth tokens. Use a long random value in production. |
+| `KEY_ENCRYPTION_KEY` | derived from `SECRET_KEY` if empty | Encrypts saved BYOK keys. Set a dedicated value and back it up. |
+| `DATABASE_URL` | `sqlite:///./data/copilot.db` | Use a PostgreSQL URL in production. |
+| `ENVIRONMENT` | `development` | Set to `production` on the server. |
+| `COOKIE_SECURE` | `false` | Set to `true` behind HTTPS. |
+| `COOKIE_SAMESITE` | `lax` | Use `lax` for same-site subdomains. |
+| `COOKIE_DOMAIN` | empty | Set to `.example.com` when frontend and API use different subdomains. |
+| `FRONTEND_ORIGIN` | `http://localhost:3000` | Allowed CORS origin. |
+| `ADMIN_EMAILS` | project admin emails | Comma-separated admin allowlist. |
+| `REDIS_URL` | empty | Shared rate limiting across API instances. |
+| `SENTRY_DSN` | empty | Optional error monitoring. |
+| `GEMINI_API_KEY` | empty | Platform fallback Gemini key. |
+| `GEMINI_MODEL` | `gemini-3.5-flash` | Default Gemini model. |
+| `OPENAI_API_KEY` | empty | Platform fallback OpenAI key. |
+| `OPENAI_MODEL` | `gpt-4o-mini` | Default OpenAI model. |
 
-### Connect Gemini
+`backend/.env` is ignored by Git. Never commit provider keys, encryption keys, or database files.
 
-1. Create an API key in Google AI Studio.
-2. Copy `backend/.env.example` to `backend/.env` and set:
+---
 
-```bash
-GEMINI_API_KEY="your-key"
-GEMINI_MODEL=gemini-3.5-flash
+## BYOK and key security
+
+Users bring their own Gemini or OpenAI key from **Settings → LLM Providers**.
+
+How it works:
+
+- The key is sent to the backend over HTTPS.
+- The backend verifies it with a real provider request.
+- The key is encrypted at rest with `KEY_ENCRYPTION_KEY`.
+- The browser receives only a masked hint such as `****abcd`.
+- The key is never logged, returned, or included in error output.
+- Removing a provider key does not delete interview history.
+- A user's key is used only for that user's sessions.
+- The platform fallback is used only when the user has no provider key.
+
+`KEY_ENCRYPTION_KEY` must remain stable. If it changes or is lost, saved BYOK keys cannot be decrypted and users must reconnect their keys. Accounts, interviews, and skills are unaffected.
+
+Use the same `KEY_ENCRYPTION_KEY` on every backend instance. Otherwise, one instance cannot decrypt keys saved by another.
+
+---
+
+## Database and migrations
+
+### Local development
+
+The default `DATABASE_URL` uses SQLite at `backend/data/copilot.db`. In development, the backend creates and updates the SQLite schema automatically.
+
+### Production PostgreSQL
+
+Set:
+
+```env
+ENVIRONMENT=production
+DATABASE_URL=postgresql+psycopg2://USER:PASSWORD@HOST/DATABASE?sslmode=require
+COOKIE_SECURE=true
 ```
 
-3. Restart the backend. `GET /api/health` reports the active provider as `gemini`.
+Apply migrations once before starting the new backend:
 
-Gemini takes priority over OpenAI. With neither key set, the app uses the **deterministic mock provider** â€” fully functional offline with keyword-based scoring.
+```powershell
+cd backend
+.\.venv\Scripts\python.exe -m alembic upgrade head
+```
+
+For later deployments, run `alembic upgrade head` again before starting the new version. Do not run migrations from every API replica at the same time.
+
+Core tables include users, interviews, interview sessions, questions, question attempts, question progress, skills, provider keys, preparation goals, resumes, streaks, and copilot sessions.
+
+---
+
+## API overview
+
+All user data routes require authentication. Cookie-authenticated writes require a CSRF token. Bearer-token authentication is supported for API clients and tests.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `POST` | `/api/auth/register` | Create an account |
+| `POST` | `/api/auth/login` | Sign in and set auth cookies |
+| `POST` | `/api/auth/logout` | Clear auth cookies |
+| `GET` | `/api/users/me` | Current profile |
+| `PATCH` | `/api/users/me` | Update display name |
+| `POST` | `/api/resumes/upload` | Upload and parse a resume |
+| `POST` | `/api/jobs/analyze` | Analyze a job description |
+| `POST` | `/api/interviews` | Create and start an interview |
+| `GET` | `/api/interviews` | Interview history |
+| `GET` | `/api/interviews/{id}` | Interview detail and report |
+| `POST` | `/api/interviews/{id}/answer` | Submit and score an answer |
+| `POST` | `/api/interviews/{id}/complete` | Complete a session |
+| `GET` | `/api/dashboard` | Dashboard overview |
+| `GET` | `/api/dashboard/performance` | Score trend and type breakdown |
+| `GET` | `/api/dashboard/skills` | Skill dimensions and resume skills |
+| `GET` | `/api/dashboard/recommendations` | AI coach insights |
+| `GET` | `/api/questions` | Filtered question list |
+| `GET` | `/api/questions/domains` | Domain progress |
+| `POST` | `/api/questions/{id}/answer` | Practice answer with mic transcript |
+| `GET` | `/api/skills` | User skills |
+| `PUT` | `/api/skills/ratings` | Save self-ratings |
+| `GET` | `/api/skills/roles` | Generic role catalog |
+| `GET` | `/api/skills/assessment?role=...` | Role fit assessment |
+| `GET` | `/api/skills/recommendations?role=...` | LLM study recommendations |
+| `GET` | `/api/providers` | BYOK provider status |
+| `PUT` | `/api/providers/{provider}` | Connect or update a provider |
+| `POST` | `/api/providers/{provider}/test` | Test a key |
+| `DELETE` | `/api/providers/{provider}` | Remove a saved key |
+| `POST` | `/api/coach/chat` | Performance-grounded coach chat |
+| `GET` | `/api/admin/users` | Admin account directory |
+| `GET` | `/api/health` | Liveness |
+| `GET` | `/api/ready` | Database readiness |
+
+---
+
+## Project structure
+
+```text
+crack-karo/
+├── backend/
+│   ├── app/
+│   │   ├── ai/              # Gemini, OpenAI, mock providers
+│   │   ├── routers/         # Auth, interviews, questions, skills, providers, admin
+│   │   ├── services/        # Analytics and coach insights
+│   │   ├── byok.py          # Encrypted provider-key vault
+│   │   ├── models.py        # SQLAlchemy models
+│   │   ├── schemas.py       # Pydantic contracts
+│   │   └── main.py          # FastAPI application
+│   ├── alembic/             # Database migrations
+│   ├── tests/               # Auth, BYOK, and health tests
+│   ├── Dockerfile
+│   └── requirements.txt
+├── frontend/
+│   ├── app/                 # Next.js App Router pages
+│   ├── components/          # Dashboard, settings, and UI components
+│   ├── lib/                 # API client, auth, speech, preferences
+│   └── package.json
+├── deploy/
+│   ├── docker-compose.yml
+│   ├── Caddyfile
+│   ├── backup.sh
+│   └── README.md
+├── docs/
+├── .github/workflows/ci.yml
+└── README.md
+```
 
 ---
 
 ## Testing
 
-```bash
+Backend:
+
+```powershell
 cd backend
-python e2e_test.py
+.\.venv\Scripts\python.exe -m pytest -q
 ```
 
-Runs: register â†’ dashboard â†’ interview creation â†’ answer submission â†’ scoring â†’ completion â†’ copilot â†’ question bank. Exits with `=== ALL E2E CHECKS PASSED ===`.
+Frontend:
+
+```powershell
+cd frontend
+npx tsc --noEmit
+npm run build
+```
+
+Deployment configuration:
+
+```powershell
+docker compose -f deploy/docker-compose.yml config --quiet
+```
+
+The test suite covers cookie authentication, CSRF enforcement, Bearer-token compatibility, BYOK encryption, health, and readiness.
 
 ---
 
-## Documentation
+## Deployment
 
-| Document | Contents |
-|----------|----------|
-| [`docs/01-original-ask.md`](docs/01-original-ask.md) | Product vision, target users, scope |
-| [`docs/02-brainstorming.md`](docs/02-brainstorming.md) | Architecture decisions, trade-offs |
-| [`docs/03-implementation.md`](docs/03-implementation.md) | Build log, API contracts, deployment |
-| [`docs/04-user-guide.md`](docs/04-user-guide.md) | End-user guide with screenshots |
-| [`schema.sql`](schema.sql) | PostgreSQL schema (reference) |
-| [`ai-orchestration.md`](ai-orchestration.md) | AI scoring dimensions & flow |
-| [`interview-copilot-architecture.drawio`](interview-copilot-architecture.drawio) | Visual architecture diagram |
+The recommended zero-cost starting point is:
+
+- **Frontend:** Vercel or Cloudflare Pages
+- **Backend:** Oracle Always Free VM running Docker Compose
+- **Database:** Neon or Supabase Postgres
+- **Cache:** Redis on the Oracle VM
+- **TLS / DNS:** Cloudflare + Caddy
+- **Backups:** nightly `pg_dump` copied to R2 or S3
+- **AI inference:** user-provided Gemini or OpenAI key
+
+See [`deploy/README.md`](deploy/README.md) for the full deployment and backup procedure.
+
+Production checklist:
+
+- `ENVIRONMENT=production`
+- Postgres `DATABASE_URL`
+- `COOKIE_SECURE=true`
+- stable `SECRET_KEY` and `KEY_ENCRYPTION_KEY`
+- `REDIS_URL` configured
+- `SENTRY_DSN` configured
+- migrations applied
+- backups copied off the server
+- restore tested
+- Oracle security list restricted to 22, 80, and 443
+- no platform LLM key required for normal BYOK operation
+
+A single Always Free VM is not highly available. Treat it as an early-stage host and keep deployment reproducible so it can be replaced quickly.
 
 ---
 
-## License
+## Security model
 
-MIT
+- Passwords are hashed; password hashes are never returned.
+- Auth uses httpOnly, Secure, SameSite cookies in production.
+- CSRF protection is enforced for cookie-authenticated writes.
+- Rate limits protect auth and API routes; Redis shares limits across instances.
+- BYOK keys are encrypted at rest with a server-side master key.
+- Provider keys are masked and never returned to the browser.
+- Admin access is enforced server-side through `ADMIN_EMAILS`.
+- User data is scoped to the authenticated user on every request.
+- File uploads are limited in size and type.
+- CORS is restricted to the configured frontend origin.
+- Structured logs do not include secrets.
+- `.env`, databases, logs, and build artifacts are ignored by Git.
 
+---
 
+## Current limitations and roadmap
+
+- **Live Chat is browser-based voice.** It uses the Web Speech API and the existing interview engine. Native full-duplex Gemini Live or OpenAI Realtime audio is the next major module.
+- **Only Gemini and OpenAI are supported as BYOK providers.** Custom provider endpoints and base URLs are not implemented yet.
+- **No background job queue yet.** Interview scoring and resume parsing run in the request path.
+- **No object storage yet.** Resumes are stored as extracted text; raw audio is not stored.
+- **No multi-region or high-availability deployment yet.** The current architecture is scale-ready but runs as a modular monolith.
+- **No billing or payments.** This is intentional.
+- **Privacy Policy and Terms pages are still pending.**
+
+Planned next steps:
+
+1. Native Gemini Live / OpenAI Realtime gateway with barge-in.
+2. Queue workers for long AI and parsing jobs.
+3. Object storage with retention controls.
+4. Load tests and multi-instance API deployment.
+5. Formal AI evaluation suite and prompt regression tests.
+6. Privacy, terms, and account data export/delete flows.
+
+---
+
+## Contributing
+
+Issues and pull requests are welcome.
+
+Before opening a pull request:
+
+1. Keep the existing modular-monolith structure.
+2. Add tests for backend behavior changes.
+3. Run `pytest`, `npx tsc --noEmit`, and `npm run build`.
+4. Never commit `.env` files, API keys, database files, or logs.
+5. Include a clear description of the change and any migration impact.
+
+---
+
+Built as a free, student-focused interview practice platform with BYOK inference and a production-oriented foundation.
 
