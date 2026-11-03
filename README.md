@@ -1,8 +1,11 @@
-﻿# Interview Copilot
+﻿<p align="center">
+  <img src="frontend/public/crack-karo-logo.svg" alt="Crack Karo" width="300" />
+</p>
+# Crack Karo
 
 **AI-powered interview preparation for students and early-career engineers.**
 
-Interview Copilot is a full-stack practice platform built around voice-first mock interviews. It generates interview questions, transcribes spoken answers, scores them across multiple dimensions, tracks readiness over time, and turns the results into a personalised practice plan.
+Crack Karo is a full-stack practice platform built around voice-first mock interviews. It generates interview questions, transcribes spoken answers, scores them across multiple dimensions, tracks readiness over time, and turns the results into a personalised practice plan.
 
 The platform is designed around a **bring-your-own-key (BYOK)** model: users connect their own Gemini or OpenAI key, so the application can stay free while inference costs remain under the user's control.
 
@@ -37,7 +40,7 @@ The platform is designed around a **bring-your-own-key (BYOK)** model: users con
 
 ## What it does
 
-Interview practice usually gives people a score and little else. Interview Copilot keeps the full loop:
+Interview practice usually gives people a score and little else. Crack Karo keeps the full loop:
 
 1. Choose a role, interview type, difficulty, and session length.
 2. The AI interviewer asks questions by voice.
@@ -541,4 +544,5 @@ Before opening a pull request:
 ---
 
 Built as a free, student-focused interview practice platform with BYOK inference and a production-oriented foundation.
+
 

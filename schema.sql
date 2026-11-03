@@ -1,5 +1,5 @@
 -- =====================================================================
--- AI Interview Copilot — PostgreSQL Schema (v1.0)
+-- Crack Karo — PostgreSQL Schema (v1.0)
 -- Engine: PostgreSQL 16+  |  Extensions: pgcrypto, pgvector (optional)
 -- =====================================================================
 

@@ -4,7 +4,7 @@ import "./globals.css";
 import "./dashboard.css";
 
 export const metadata: Metadata = {
-  title: "Interview Copilot",
+  title: "Crack Karo",
   description:
     "Prepare for interviews with AI mock interviews, performance analytics, and personalised coaching.",
 };

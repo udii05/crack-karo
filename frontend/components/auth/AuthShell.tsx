@@ -1,5 +1,6 @@
-import Link from "next/link";
-import { AudioLines, CheckCircle2 } from "lucide-react";
+﻿import Link from "next/link";
+import { CheckCircle2 } from "lucide-react";
+import BrandMark from "@/components/brand/BrandMark";
 
 export default function AuthShell({
   title,
@@ -20,12 +21,10 @@ export default function AuthShell({
           className="pointer-events-none absolute -right-24 -top-24 h-[360px] w-[360px] rounded-full border border-[#dbe8fb] shadow-[0_0_0_45px_rgba(255,255,255,0.3),0_0_0_100px_rgba(255,255,255,0.18)]"
         />
         <Link href="/" className="relative flex items-center gap-2.5">
-          <span className="grid h-[38px] w-[38px] place-items-center rounded-xl bg-brand-600 text-white shadow-[0_5px_12px_rgba(57,120,232,0.2)]">
-            <AudioLines className="h-5 w-5" />
-          </span>
+          <BrandMark className="h-[38px] w-[38px]" />
           <span>
             <span className="block text-[15px] font-bold tracking-[-0.3px] text-ink-900">
-              Interview Copilot
+              Crack <span className="text-brand-600">Karo</span>
             </span>
             <span className="block text-[9px] font-semibold uppercase tracking-[1.8px] text-[#8b98ab]">
               Practice workspace
@@ -66,10 +65,10 @@ export default function AuthShell({
       <section className="flex min-h-screen items-center justify-center px-5 py-10">
         <div className="w-full max-w-[420px]">
           <Link href="/" className="mb-6 flex items-center justify-center gap-2.5 lg:hidden">
-            <span className="grid h-[34px] w-[34px] place-items-center rounded-xl bg-brand-600 text-white">
-              <AudioLines className="h-4 w-4" />
+            <BrandMark className="h-[34px] w-[34px]" />
+            <span className="text-sm font-bold text-ink-900">
+              Crack <span className="text-brand-600">Karo</span>
             </span>
-            <span className="text-sm font-bold text-ink-900">Interview Copilot</span>
           </Link>
 
           <div className="card p-6 sm:p-7">
@@ -84,3 +83,4 @@ export default function AuthShell({
     </div>
   );
 }
+

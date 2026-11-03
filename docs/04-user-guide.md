@@ -1,6 +1,6 @@
 # 04 — User Guide
 
-## What is AI Interview Copilot?
+## What is Crack Karo?
 
 An AI-powered platform that helps you prepare for job interviews. Upload your resume, paste a job description, run realistic mock interviews, get scored feedback, and use the Live Copilot for real-time hints during actual interviews.
 

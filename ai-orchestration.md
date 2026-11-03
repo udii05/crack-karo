@@ -1,4 +1,4 @@
-# AI Interview Copilot — AI Orchestration Flow
+# Crack Karo — AI Orchestration Flow
 
 The AI layer is a **separate service** (FastAPI or Node) behind the API gateway, consuming jobs from a queue and streaming results back over WebSocket/SSE. It is the only component that talks to LLM providers.
 

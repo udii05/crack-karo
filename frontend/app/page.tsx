@@ -1,7 +1,7 @@
-import Link from "next/link";
+﻿import Link from "next/link";
+import BrandMark from "@/components/brand/BrandMark";
 import {
   ArrowRight,
-  AudioLines,
   BarChart3,
   BookOpen,
   Briefcase,
@@ -69,11 +69,11 @@ export default function LandingPage() {
       <header className="sticky top-0 z-40 border-b border-line bg-white/90 backdrop-blur-[12px]">
         <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-5 sm:px-6">
           <Link href="/" className="flex items-center gap-2.5">
-            <span className="grid h-[36px] w-[36px] place-items-center rounded-xl bg-brand-600 text-white shadow-[0_5px_12px_rgba(57,120,232,0.2)]">
-              <AudioLines className="h-5 w-5" />
-            </span>
+            <BrandMark className="h-[36px] w-[36px]" />
             <span>
-              <span className="block text-[15px] font-bold tracking-[-0.3px]">Interview Copilot</span>
+              <span className="block text-[15px] font-bold tracking-[-0.3px]">
+                Crack <span className="text-brand-600">Karo</span>
+              </span>
               <span className="block text-[9px] font-semibold uppercase tracking-[1.8px] text-[#8b98ab]">
                 Practice workspace
               </span>
@@ -139,10 +139,10 @@ export default function LandingPage() {
               <div className="relative rounded-[22px] border border-[#e2ebfb] bg-white p-4 shadow-[0_24px_60px_rgba(25,48,82,0.12)]">
                 <div className="flex items-center justify-between border-b border-line pb-3">
                   <div className="flex items-center gap-2">
-                    <span className="grid h-7 w-7 place-items-center rounded-lg bg-brand-600 text-white">
-                      <AudioLines className="h-3.5 w-3.5" />
+                    <BrandMark className="h-7 w-7" />
+                    <span className="text-xs font-bold">
+                      Crack <span className="text-brand-600">Karo</span>
                     </span>
-                    <span className="text-xs font-bold">Interview Copilot</span>
                   </div>
                   <span className="rounded-full bg-[#f1f5fb] px-2 py-1 text-[9px] font-semibold text-[#73839a]">
                     Product preview
@@ -291,10 +291,8 @@ export default function LandingPage() {
       <footer className="border-t border-line bg-white">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-7 text-xs text-[#8b98aa] sm:flex-row sm:px-6">
           <div className="flex items-center gap-2">
-            <span className="grid h-6 w-6 place-items-center rounded-md bg-brand-600 text-white">
-              <AudioLines className="h-3.5 w-3.5" />
-            </span>
-            Interview Copilot
+            <BrandMark className="h-6 w-6" />
+            Crack <span className="text-brand-600">Karo</span>
           </div>
           <div>Structured practice for calmer, stronger interviews.</div>
         </div>
@@ -302,3 +300,4 @@ export default function LandingPage() {
     </div>
   );
 }
+

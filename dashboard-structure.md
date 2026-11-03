@@ -1,4 +1,4 @@
-# AI Interview Copilot — Next.js Dashboard Structure
+# Crack Karo — Next.js Dashboard Structure
 
 Stack: **Next.js 14+ (App Router) · TypeScript · Tailwind CSS · shadcn/ui · TanStack Query · Zustand · WebSocket (live copilot)**
 

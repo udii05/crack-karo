@@ -2,7 +2,7 @@
 
 ## Product Vision
 
-> "I want to build a production-ready AI Interview Copilot SaaS."
+> "I want to build a production-ready Crack Karo SaaS."
 
 ### Target Users
 1. **Students** — preparing for internships / first jobs

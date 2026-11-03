@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { AudioLines } from "lucide-react";
+import BrandMark from "@/components/brand/BrandMark";
 import { useAuth } from "@/lib/auth";
 import { DashboardDataProvider } from "./DashboardDataProvider";
 import Sidebar from "./Sidebar";
@@ -41,9 +41,7 @@ export default function DashboardShell({
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#f6f8fc]">
         <div className="flex flex-col items-center gap-3 text-slate-500">
-          <div className="grid h-11 w-11 place-items-center rounded-xl bg-brand-600 text-white shadow-[0_5px_12px_rgba(57,120,232,0.2)]">
-            <AudioLines className="h-5 w-5" />
-          </div>
+          <BrandMark className="h-11 w-11" />
           <div className="text-sm font-medium">Loading your workspace...</div>
         </div>
       </div>
@@ -65,3 +63,4 @@ export default function DashboardShell({
     </DashboardDataProvider>
   );
 }
+

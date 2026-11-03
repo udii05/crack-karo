@@ -70,7 +70,7 @@ export default function ProfilePage() {
         <div className="card">
           <div className="flex items-start gap-4">
             <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#eaf0fb] text-lg font-bold text-[#315c9d]">
-              {initials(user?.full_name || "Interview Copilot")}
+              {initials(user?.full_name || "Crack Karo")}
             </div>
             <div className="min-w-0 flex-1">
               {editing ? (

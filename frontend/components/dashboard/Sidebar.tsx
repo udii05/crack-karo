@@ -138,7 +138,7 @@ function SidebarBody({ onNavigate }: { onNavigate?: () => void }) {
           <AudioLines />
         </div>
         <div className="min-w-0 flex-1">
-          <div className="ic-brand-name">Interview Copilot</div>
+          <div className="ic-brand-name">Crack Karo</div>
           <div className="ic-brand-sub">Practice workspace</div>
         </div>
       </div>
@@ -179,7 +179,7 @@ function SidebarBody({ onNavigate }: { onNavigate?: () => void }) {
               accountOpen ? "bg-[#f8faff]" : ""
             }`}
           >
-            <div className="ic-avatar">{initials(user?.full_name || "Interview Copilot")}</div>
+            <div className="ic-avatar">{initials(user?.full_name || "Crack Karo")}</div>
             <div className="min-w-0 flex-1">
               <div className="ic-profile-name">{user?.full_name}</div>
               <div className="ic-profile-email">{user?.email}</div>
@@ -286,5 +286,6 @@ export default function Sidebar({
     </>
   );
 }
+
 
 
