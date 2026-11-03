@@ -139,7 +139,6 @@ function SidebarBody({ onNavigate }: { onNavigate?: () => void }) {
         </div>
         <div className="min-w-0 flex-1">
           <div className="ic-brand-name">Crack Karo</div>
-          <div className="ic-brand-sub">Practice workspace</div>
         </div>
       </div>
 

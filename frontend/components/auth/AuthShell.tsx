@@ -26,9 +26,6 @@ export default function AuthShell({
             <span className="block text-[15px] font-bold tracking-[-0.3px] text-ink-900">
               Crack <span className="text-brand-600">Karo</span>
             </span>
-            <span className="block text-[9px] font-semibold uppercase tracking-[1.8px] text-[#8b98ab]">
-              Practice workspace
-            </span>
           </span>
         </Link>
 
