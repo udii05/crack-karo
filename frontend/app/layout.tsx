@@ -4,7 +4,7 @@ import "./globals.css";
 import "./dashboard.css";
 
 export const metadata: Metadata = {
-  title: "Crack Karo",
+  title: "Crack Karo | Your Personal Interview Coach",
   description:
     "Prepare for interviews with AI mock interviews, performance analytics, and personalised coaching.",
 };
