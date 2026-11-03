@@ -90,7 +90,7 @@ export default function LandingFooter() {
         </div>
 
         <div className="mt-12 flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs text-[#8b98aa]">© 2026 Crack Karo</p>
+          <p className="text-xs text-[#8b98aa]">© 2026 Crack Karo. All Rights Reserved.</p>
           <div className="flex items-center gap-2">
             <a
               href="#"
