@@ -23,6 +23,7 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { initials } from "@/lib/format";
+import BrandMark from "@/components/brand/BrandMark";
 
 type NavItem = {
   label: string;
@@ -134,11 +135,11 @@ function SidebarBody({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <>
       <div className="ic-brand">
-        <div className="ic-brand-mark">
-          <AudioLines />
-        </div>
+        <BrandMark className="h-[38px] w-[38px]" />
         <div className="min-w-0 flex-1">
-          <div className="ic-brand-name">Crack Karo</div>
+          <div className="ic-brand-name">
+            Crack <span className="text-brand-600">Karo</span>
+          </div>
         </div>
       </div>
 
@@ -285,6 +286,7 @@ export default function Sidebar({
     </>
   );
 }
+
 
 
 

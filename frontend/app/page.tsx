@@ -71,7 +71,7 @@ export default function LandingPage() {
           <Link href="/" className="flex items-center gap-2.5">
             <BrandMark className="h-[36px] w-[36px]" />
             <span>
-              <span className="block text-[15px] font-bold tracking-[-0.3px]">
+              <span className="block text-[15px] font-bold leading-none tracking-[-0.3px]">
                 Crack <span className="text-brand-600">Karo</span>
               </span>
             </span>
@@ -137,7 +137,7 @@ export default function LandingPage() {
                 <div className="flex items-center justify-between border-b border-line pb-3">
                   <div className="flex items-center gap-2">
                     <BrandMark className="h-7 w-7" />
-                    <span className="text-xs font-bold">
+                    <span className="text-xs font-bold leading-none">
                       Crack <span className="text-brand-600">Karo</span>
                     </span>
                   </div>
@@ -297,4 +297,5 @@ export default function LandingPage() {
     </div>
   );
 }
+
 
