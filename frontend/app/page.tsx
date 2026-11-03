@@ -1,5 +1,7 @@
 ﻿import Link from "next/link";
 import BrandMark from "@/components/brand/BrandMark";
+import LandingFooter from "@/components/landing/LandingFooter";
+import LandingHeader from "@/components/landing/LandingHeader";
 import {
   ArrowRight,
   BarChart3,
@@ -66,32 +68,7 @@ const STEPS = [
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#f6f8fc] text-ink-900">
-      <header className="sticky top-0 z-40 border-b border-line bg-white/90 backdrop-blur-[12px]">
-        <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-5 sm:px-6">
-          <Link href="/" className="flex items-center gap-2.5">
-            <BrandMark className="h-[36px] w-[36px]" />
-            <span>
-              <span className="block text-[26px] font-bold leading-[36px] tracking-[-0.5px]">
-                Crack <span className="text-brand-600">Karo</span>
-              </span>
-            </span>
-          </Link>
-
-          <nav className="hidden items-center gap-7 text-sm font-medium text-[#65748a] md:flex">
-            <a href="#features" className="hover:text-brand-600">Features</a>
-            <a href="#how-it-works" className="hover:text-brand-600">How it works</a>
-            <a href="#preview" className="hover:text-brand-600">Product</a>
-          </nav>
-
-          <div className="flex items-center gap-2">
-            <Link href="/login" className="btn-ghost btn-sm">Log in</Link>
-            <Link href="/register" className="btn-primary btn-sm">
-              Get started
-              <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-          </div>
-        </div>
-      </header>
+      <LandingHeader />
 
       <main>
         <section className="relative overflow-hidden border-b border-line">
@@ -131,7 +108,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div id="preview" className="relative">
+            <div id="preview" className="relative scroll-mt-24">
               <div className="absolute inset-4 rounded-[28px] bg-[#eaf2ff]" />
               <div className="relative rounded-[22px] border border-[#e2ebfb] bg-white p-4 shadow-[0_24px_60px_rgba(25,48,82,0.12)]">
                 <div className="flex items-center justify-between border-b border-line pb-3">
@@ -204,7 +181,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="features" className="mx-auto max-w-6xl px-5 py-16 sm:px-6 lg:py-20">
+        <section id="features" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-16 sm:px-6 lg:py-20">
           <div className="max-w-2xl">
             <div className="text-[11px] font-bold uppercase tracking-[1.8px] text-brand-600">
               Everything in one workspace
@@ -234,7 +211,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="how-it-works" className="border-y border-line bg-white">
+        <section id="how-it-works" className="scroll-mt-24 border-y border-line bg-white">
           <div className="mx-auto max-w-6xl px-5 py-16 sm:px-6 lg:py-20">
             <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
               <div>
@@ -285,17 +262,7 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer className="border-t border-line bg-white">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-7 text-xs text-[#8b98aa] sm:flex-row sm:px-6">
-          <div className="flex items-center gap-2">
-            <BrandMark className="h-6 w-6" />
-            <span className="text-[15px] font-bold leading-[24px]">
-              Crack <span className="text-brand-600">Karo</span>
-            </span>
-          </div>
-          <div>Structured practice for calmer, stronger interviews.</div>
-        </div>
-      </footer>
+      <LandingFooter />
     </div>
   );
 }

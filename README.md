@@ -517,7 +517,7 @@ A single Always Free VM is not highly available. Treat it as an early-stage host
 - **No object storage yet.** Resumes are stored as extracted text; raw audio is not stored.
 - **No multi-region or high-availability deployment yet.** The current architecture is scale-ready but runs as a modular monolith.
 - **No billing or payments.** This is intentional.
-- **Privacy Policy and Terms pages are still pending.**
+- **Privacy and Terms pages are drafts pending legal review.**
 
 Planned next steps:
 
