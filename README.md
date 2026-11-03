@@ -1,9 +1,10 @@
 ﻿<p align="center">
   <img src="frontend/public/crack-karo-logo.svg" alt="Crack Karo" width="300" />
 </p>
-# Crack Karo
 
-**AI-powered interview preparation for students and early-career engineers.**
+<p align="center">
+   AI-powered interview preparation for students and early-career engineers.
+</p>
 
 Crack Karo is a full-stack practice platform built around voice-first mock interviews. It generates interview questions, transcribes spoken answers, scores them across multiple dimensions, tracks readiness over time, and turns the results into a personalised practice plan.
 
