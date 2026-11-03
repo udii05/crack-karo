@@ -53,7 +53,7 @@ export default function LandingFooter() {
   return (
     <footer className="border-t border-line bg-white">
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-6">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_2.9fr]">
+        <div className="grid gap-12 lg:grid-cols-[1fr_2.9fr] lg:gap-24 xl:gap-28">
           <div className="max-w-sm">
             <Link href="/" className="flex items-center gap-2.5">
               <BrandMark className="h-[38px] w-[38px]" />
