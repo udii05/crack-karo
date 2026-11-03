@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 96" width="380" height="96">
   <defs>
     <linearGradient id="crackKaroLogoGradient" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#3B82F6" />
-      <stop offset="1" stop-color="#4F46E5" />
+      <stop offset="0" stop-color="#3978e8" />
+      <stop offset="1" stop-color="#245fc9" />
     </linearGradient>
   </defs>
   <rect x="8" y="8" width="80" height="80" rx="20" fill="url(#crackKaroLogoGradient)" />
-  <rect x="24" y="36" width="48" height="34" rx="8" fill="#ffffff" />
-  <path d="M39 36v-4a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v4" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
-  <path d="M39 53l7 7 12-14" fill="none" stroke="#4F46E5" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
-  <text x="106" y="52" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="36" font-weight="800" letter-spacing="-0.5" fill="#0F172A">Crack<tspan dx="8" fill="#4F5BE8">Karo</tspan></text>
-  <text x="108" y="74" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="500" letter-spacing="3.2" fill="#8795A8">PRACTICE WORKSPACE</text>
+  <rect x="20" y="32" width="56" height="40" rx="8" fill="#ffffff" />
+  <path d="M36 32v-5a6 6 0 0 1 6-6h8a6 6 0 0 1 6 6v5" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M36 50l8 8 14-16" fill="none" stroke="#3978e8" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="106" y="52" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="36" font-weight="800" letter-spacing="-0.5" fill="#0F172A">Crack<tspan dx="8" fill="#3978e8">Karo</tspan></text>
+  <text x="108" y="74" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11.5" font-weight="500" letter-spacing="3.2" fill="#8795A8">PRACTICE WORKSPACE</text>
 </svg>

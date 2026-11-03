@@ -1,4 +1,4 @@
-{
+﻿{
   "compilerOptions": {
     "lib": [
       "dom",
@@ -32,10 +32,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "next-env.d.ts",
-    ".next-build/types/**/*.ts"
+    "next-env.d.ts"
   ],
   "exclude": [
     "node_modules"
   ]
 }
+
