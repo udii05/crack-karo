@@ -138,9 +138,9 @@ flowchart LR
         UI <--> Speech
     end
 
-    Edge["Cloudflare<br/>DNS, TLS, WAF"]
-    Frontend["Vercel / Cloudflare Pages<br/>Next.js frontend"]
-    API["Oracle VM + Docker<br/>Caddy -> FastAPI<br/>REST, cookies, CSRF"]
+    Edge["Cloudflare DNS-only<br/>(optional)"]
+    Frontend["Oracle VM + Caddy<br/>Next.js frontend"]
+    API["Oracle VM + Docker<br/>FastAPI<br/>REST, cookies, CSRF"]
     DB[("PostgreSQL<br/>Neon / Supabase")]
     Redis[("Redis<br/>shared rate limits")]
     Providers["BYOK provider gateway<br/>per-user encrypted keys"]
@@ -150,7 +150,8 @@ flowchart LR
     Backup[("Encrypted backups<br/>R2 / S3")]
     Realtime["Planned realtime gateway<br/>Gemini Live / OpenAI Realtime"]
 
-    UI --> Edge --> Frontend --> API
+    UI --> Edge --> Frontend
+    Frontend --> API
     API --> DB
     API --> Redis
     API --> Providers
@@ -420,6 +421,7 @@ crack-karo/
 │   ├── app/                 # Next.js App Router pages
 │   ├── components/          # Dashboard, settings, and UI components
 │   ├── lib/                 # API client, auth, speech, preferences
+│   ├── Dockerfile
 │   └── package.json
 ├── deploy/
 │   ├── docker-compose.yml
@@ -464,11 +466,11 @@ The test suite covers cookie authentication, CSRF enforcement, Bearer-token comp
 
 The recommended zero-cost starting point is:
 
-- **Frontend:** Vercel or Cloudflare Pages
-- **Backend:** Oracle Always Free VM running Docker Compose
+- **Frontend and backend:** Oracle Always Free VM running Docker Compose
+- **Reverse proxy:** Caddy on the VM, serving the Next.js frontend and FastAPI on one HTTPS origin
 - **Database:** Neon or Supabase Postgres
 - **Cache:** Redis on the Oracle VM
-- **TLS / DNS:** Cloudflare + Caddy
+- **TLS / DNS:** Caddy with DuckDNS, or a custom domain; Cloudflare DNS-only if used
 - **Backups:** nightly `pg_dump` copied to R2 or S3
 - **AI inference:** user-provided Gemini or OpenAI key
 
@@ -479,10 +481,14 @@ Production checklist:
 - `ENVIRONMENT=production`
 - Postgres `DATABASE_URL`
 - `COOKIE_SECURE=true`
+- `COOKIE_SAMESITE=lax`
+- `COOKIE_DOMAIN` empty for the shared origin
 - stable `SECRET_KEY` and `KEY_ENCRYPTION_KEY`
 - `REDIS_URL` configured
 - `SENTRY_DSN` configured
 - migrations applied
+- Caddy terminates TLS on the VM
+- Cloudflare, if used, is DNS-only
 - backups copied off the server
 - restore tested
 - Oracle security list restricted to 22, 80, and 443
