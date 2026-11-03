@@ -23,7 +23,7 @@ export default function AuthShell({
         <Link href="/" className="relative flex items-center gap-2.5">
           <BrandMark className="h-[38px] w-[38px]" />
           <span>
-            <span className="block text-[15px] font-bold leading-none tracking-[-0.3px] text-ink-900">
+            <span className="block text-[26px] font-bold leading-[38px] tracking-[-0.5px] text-ink-900">
               Crack <span className="text-brand-600">Karo</span>
             </span>
           </span>
@@ -63,7 +63,7 @@ export default function AuthShell({
         <div className="w-full max-w-[420px]">
           <Link href="/" className="mb-6 flex items-center justify-center gap-2.5 lg:hidden">
             <BrandMark className="h-[34px] w-[34px]" />
-            <span className="text-sm font-bold text-ink-900">
+            <span className="text-[22px] font-bold leading-[34px] text-ink-900">
               Crack <span className="text-brand-600">Karo</span>
             </span>
           </Link>
@@ -80,5 +80,6 @@ export default function AuthShell({
     </div>
   );
 }
+
 
 
