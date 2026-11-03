@@ -270,10 +270,10 @@ export default function LandingPage() {
             <div className="relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
               <div>
                 <h2 className="text-2xl font-bold tracking-[-0.8px] text-[#172b49] sm:text-3xl">
-                  Your next interview starts with one practice session.
+                  Practice karo. Interview crack karo.
                 </h2>
                 <p className="mt-2 max-w-xl text-sm text-[#667a98]">
-                  Create a free workspace and run your first voice mock interview in minutes.
+                  Every practice session brings you closer to your dream job.
                 </p>
               </div>
               <Link href="/register" className="btn-primary shrink-0 px-5 py-3">
